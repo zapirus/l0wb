@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  postgres:
+    image: 'postgres'
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: skar4500
+      POSTGRES_DB: postgres
+    volumes:
+      - ./sqlScripts:/docker-entrypoint-initdb.d
+      - db-data:/var/lib/postgres/data
+  nats-streaming:
+    image: 'nats-streaming'
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    restart: always
+
+volumes:
+  db-data:
+    driver: local
